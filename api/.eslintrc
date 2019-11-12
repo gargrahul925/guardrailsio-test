@@ -1,0 +1,26 @@
+{
+  "env": {
+    "browser": false,
+    "node": true,
+    "jest": true
+  },
+  "extends": [
+    "airbnb-base"
+  ],
+  "plugins": [
+    "smells"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2019
+  },
+  "rules": {
+    "no-underscore-dangle": [
+      0,
+      {
+        "exceptions": [
+          "_id"
+        ]
+      }
+    ]   
+  }
+}
