@@ -16,7 +16,7 @@ const createApp = async () => {
 
   app.use(cors());
   app.use(compression());
-  app.use(validateIdParam);
+  app.use(validateIdParam.validate);
 
   app.get('/', (_req, res) => {
     res.status(200).json({ message: 'NodeJS API' });

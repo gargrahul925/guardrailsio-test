@@ -2,6 +2,6 @@ const express = require('express');
 
 const router = express.Router();
 
-router.use('/scannings', require('./scannings'));
+router.use('/scans', require('./scannings'));
 
 module.exports = router;

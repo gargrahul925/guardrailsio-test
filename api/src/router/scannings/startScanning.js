@@ -63,7 +63,8 @@ class StartScanning {
       if (scanResult.status !== 'queued') {
         throw new commonErrors.Error(errors.ERR_INVALID_ARGS, new Error('Only queued job can be pushed for scanning.'));
       }
-      await scanResult.save({ status: 'scanning', scanningAt: new Date().getTime() });
+      scanResult.set({ status: 'in-progress', scanningAt: new Date().getTime() });
+      await scanResult.save();
       res.locals.apiResponse = new ApiResponse(HttpStatusCode.OK, {
         message: 'Scanning started',
       });

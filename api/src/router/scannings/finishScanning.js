@@ -55,6 +55,7 @@ class FinishScanning {
     });
 
     const schema = Joi.object().keys({
+      status: Joi.string().valid('success').valid('failed'),
       findings: Joi.array().items(findingSchema),
     });
 
@@ -81,12 +82,17 @@ class FinishScanning {
       if (!scanResult) {
         throw new commonErrors.Error(errors.NOT_FOUND, new Error('Invalid result Id'));
       }
-      if (scanResult.status !== 'queued') {
+      if (scanResult.status !== 'in-progress') {
         throw new commonErrors.Error(errors.ERR_INVALID_ARGS, new Error('Only running job can be finished.'));
       }
-      await scanResult.save({ status: 'finished', finishedAt: new Date().getTime(), findings: req.body.findings });
+      scanResult.set({
+        status: req.body.status,
+        finishedAt: new Date().getTime(),
+        findings: req.body.findings,
+      });
+      await scanResult.save();
       res.locals.apiResponse = new ApiResponse(HttpStatusCode.OK, {
-        message: 'scanning completed and Findings are logged.',
+        message: 'Scanning completed and Findings are logged.',
       });
       next();
     } catch (error) {

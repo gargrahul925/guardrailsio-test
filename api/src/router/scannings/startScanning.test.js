@@ -19,13 +19,15 @@ describe('Response Handler api Test Suite', () => {
       locals: {},
     };
     const mockSave = jest.fn();
-    mockModels.ScanResult.findById.mockResolvedValue({ status: 'queued', save: mockSave });
+    const mockSet = jest.fn();
+    mockModels.ScanResult.findById.mockResolvedValue({ status: 'queued', save: mockSave, set: mockSet });
     startScanning.middleware(req, res, (err) => {
       expect(err).toBe(undefined);
       expect(res.locals.apiResponse).toBeInstanceOf(ApiResponse);
       expect(res.locals.apiResponse.statusCode).toBe(HttpStatusCode.OK);
       expect(mockModels.ScanResult.findById).toBeCalled();
       expect(mockSave).toBeCalled();
+      expect(mockSet).toBeCalled();
     });
   });
 

@@ -69,7 +69,8 @@ class AddToQueue {
   static async middleware(req, res, next) {
     try {
       AddToQueue.validate(req.body);
-      const scanResult = new ScanResult(req.body);
+      const data = Object.assign({}, req.body, { queuedAt: new Date().getTime() });
+      const scanResult = new ScanResult(data);
       const result = await scanResult.save();
       res.locals.apiResponse = new ApiResponse(HttpStatusCode.OK, {
         data: result.toJSON(),

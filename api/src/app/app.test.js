@@ -17,7 +17,9 @@ config.get.mockImplementation(key => mockConfig[key]);
 
 const mockOkHandler = jest.fn();
 const mockErrorHandler = jest.fn();
-const mockValidateIdParam = jest.fn();
+const mockValidateIdParam = {
+  validate: jest.fn(),
+};
 const mockResponseHandler = {
   OkHandler: mockOkHandler,
   ErrorHandler: mockErrorHandler,
@@ -42,7 +44,7 @@ describe('app test cases', () => {
     expect(mockExpress.use).toHaveBeenNthCalledWith(1, bodyParser.json());
     expect(mockExpress.use).toHaveBeenNthCalledWith(2, cors());
     expect(mockExpress.use).toHaveBeenNthCalledWith(3, compression());
-    expect(mockExpress.use).toHaveBeenNthCalledWith(4, mockValidateIdParam);
+    expect(mockExpress.use).toHaveBeenNthCalledWith(4, mockValidateIdParam.validate);
     expect(mockExpress.use).toHaveBeenNthCalledWith(5,
       mockConfig[mockBaseURIParam], mockRouter);
     expect(mockExpress.use).toHaveBeenNthCalledWith(6, mockOkHandler);
