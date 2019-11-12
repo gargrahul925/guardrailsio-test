@@ -1,0 +1,10 @@
+node_modules
+*/coverage
+npm-debug.*
+.vscode
+out
+*.DS_Store
+*.log
+*.log.*
+logs/*
+data/*

@@ -1,0 +1,36 @@
+version: "2"
+services:
+  api:
+    build:
+      context: ./api/
+    container_name: api
+    command: npm run start-watch
+    volumes:
+      - "./api/:/home/alpine/app"
+      - "/home/alpine/app/node_modules"
+    image: "api:development"
+    environment:
+      NODE_ENV: "development"
+    ports:
+      - "3000:3000"
+      - "5858:5858"
+  dashboard:
+    build:
+      context: ./dashboard/
+    container_name: dashboard
+    command: npm start
+    image: "dashboard:development"
+    volumes:
+      - "./dashboard/:/usr/app"
+      - "/usr/app/node_modules"
+    depends_on:
+      - api
+    ports:
+      - "8080:8080"
+  mongo:
+    image: mongo
+    container_name: mongodb
+    volumes:
+      - "./data/mongo:/data/db"
+    ports:
+      - "27017:27017"
