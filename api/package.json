@@ -18,7 +18,7 @@
     "bunyan": "^1.8.12",
     "common-errors": "^1.0.5",
     "compression": "^1.7.3",
-    "config": "^3.2.4",
+    "config": "^3.3.8",
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "http-status-codes": "^1.3.0",
